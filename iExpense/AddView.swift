@@ -15,6 +15,8 @@ struct AddView: View {
     @State private var amount: Double = 0.0
     
     var expenses: Expenses
+    // Added: Binding to receive the selected currency code from ContentView
+    @Binding var selectedCurrencyCode: String
     
     let types = ["Business", "Personal"]
     
@@ -29,7 +31,7 @@ struct AddView: View {
                     }
                 }
                 
-                TextField("Amount", value: $amount, format: .currency(code: "USD"))
+                TextField("Amount", value: $amount, format: .currency(code: selectedCurrencyCode))
                     .keyboardType(.decimalPad)
             }
             .navigationTitle("Add new expense")
@@ -45,5 +47,5 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView(expenses: Expenses())
+    AddView(expenses: Expenses(), selectedCurrencyCode: .constant("USD")) // used .constant for preview because it expect a binding.
 }
