@@ -10,10 +10,9 @@ import SwiftUI
 struct ExpenseSection: View {
     let title: String
     let expenses: [ExpenseItem]
+    let selectedCurrencyCode : String
     let deleteItems: (IndexSet) -> Void
-    
-    // Added: State to store the selected currency code. Initialized from UserDefaults or defaults
-    @State private var selectedCurrencyCode: String = UserDefaults.standard.string(forKey: "selectedCurrency") ?? Locale.current.currency?.identifier ?? "USD"
+
     
     var body: some View {
         Section(title) {
@@ -40,5 +39,5 @@ struct ExpenseSection: View {
 }
 
 #Preview {
-    ExpenseSection(title: "Personal", expenses: []) { _ in }
+    ExpenseSection(title: "Personal", expenses: [], selectedCurrencyCode: "USD") { _ in }
 }

@@ -55,8 +55,8 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
-                ExpenseSection(title: "Business", expenses: expenses.businessItems, deleteItems: removeBusinessItems)
-                ExpenseSection(title: "Personal", expenses: expenses.personalItems, deleteItems: removePersonalItems)
+                ExpenseSection(title: "Business", expenses: expenses.businessItems, selectedCurrencyCode: "USD", deleteItems: removeBusinessItems)
+                ExpenseSection(title: "Personal", expenses: expenses.personalItems, selectedCurrencyCode: "USD", deleteItems: removePersonalItems)
             }
             .navigationTitle("iExpense")
             .toolbar {
