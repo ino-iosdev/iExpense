@@ -18,31 +18,47 @@ struct AddView: View {
     // Added: Binding to receive the selected currency code from ContentView
     @Binding var selectedCurrencyCode: String
     
+    
     let types = ["Business", "Personal"]
     
+    
     var body: some View {
-        NavigationStack {
-            Form {
-                TextField("Name", text: $name)
-                
-                Picker("Type", selection: $type) {
-                    ForEach(types, id: \.self) {
-                            Text($0)
-                    }
+        Form {
+            TextField("Name", text: $name)
+            
+            Picker("Type", selection: $type) {
+                ForEach(types, id: \.self) {
+                    Text($0)
                 }
-                
-                TextField("Amount", value: $amount, format: .currency(code: selectedCurrencyCode))
-                    .keyboardType(.decimalPad)
             }
-            .navigationTitle("Add new expense")
-            .toolbar {
+            
+            Picker("Currency", selection: $selectedCurrencyCode) {
+                ForEach(availableCurrencyCodes, id: \.self) { code in
+                    Text(code)
+                }
+            }
+            
+            TextField("Amount", value: $amount, format: .currency(code: selectedCurrencyCode))
+                .keyboardType(.decimalPad)
+        }
+        .navigationTitle("Add new expense")
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
                     let item = ExpenseItem(name: name, type: type, amount: amount)
                     expenses.items.append(item)
                     dismiss()
                 }
             }
+            
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", role: .cancel) {
+                    dismiss()
+                }
+            }
         }
+        .navigationBarBackButtonHidden()
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

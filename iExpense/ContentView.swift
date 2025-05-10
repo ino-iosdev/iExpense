@@ -32,7 +32,7 @@ class Expenses {
     var businessItems: [ExpenseItem] {
         items.filter { $0.type == "Business"}
     }
-
+    
     // Attempt to decode items from UserDefaults during initialization
     init() {
         if let savedItems = UserDefaults.standard.data(forKey: "Items") {
@@ -48,7 +48,6 @@ class Expenses {
 
 struct ContentView: View {
     @State private var expenses = Expenses()
-    @State private var showAddExpense = false
     
     @State private var selectedCurrencyCode: String = UserDefaults.standard.string(forKey: "selectedCurrency") ?? Locale.current.currency?.identifier ?? "USD"
     
@@ -60,22 +59,11 @@ struct ContentView: View {
             }
             .navigationTitle("iExpense")
             .toolbar {
-                // Modified: Changed toolbar to a Menu to include currency selection
-                Menu {
-                    Button("Add Expense", systemImage: "plus") {
-                        showAddExpense = true
-                    }
-                    // Added: NavigationLink to CurrencySelectionView
-                    NavigationLink(destination: CurrencySelectionView(selectedCurrencyCode: $selectedCurrencyCode)) {
-                        Label("Change Currency", systemImage: "dollarsign.circle")
-                    }
+                NavigationLink {
+                    AddView(expenses: expenses, selectedCurrencyCode: $selectedCurrencyCode)
                 } label: {
-                    Image(systemName: "ellipsis.circle")
+                    Label("Add Expense", systemImage: "plus")
                 }
-            }
-            // Modified: Pass the selectedCurrencyCode binding to AddView
-            .sheet(isPresented: $showAddExpense) {
-                AddView(expenses: expenses, selectedCurrencyCode: $selectedCurrencyCode)
             }
         }
         // Added: Listen for UserDefaults changes to update the currency code
@@ -102,7 +90,7 @@ struct ContentView: View {
     func removePersonalItems(at offsets: IndexSet) {
         removeItems(at: offsets, in: expenses.personalItems)
     }
-
+    
     func removeBusinessItems(at offsets: IndexSet) {
         removeItems(at: offsets, in: expenses.businessItems)
     }

@@ -12,7 +12,6 @@ struct ExpenseSection: View {
     let expenses: [ExpenseItem]
     let selectedCurrencyCode : String
     let deleteItems: (IndexSet) -> Void
-
     
     var body: some View {
         Section(title) {
