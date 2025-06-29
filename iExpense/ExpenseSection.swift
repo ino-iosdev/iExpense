@@ -15,7 +15,6 @@ struct ExpenseSection: View {
     
     var body: some View {
         Section(title) {
-            
             ForEach(expenses) { item in
                 HStack {
                     VStack(alignment: .leading) {
@@ -31,6 +30,9 @@ struct ExpenseSection: View {
                     Text(item.amount, format: .currency(code: selectedCurrencyCode))
                         .style(for: item)
                 }
+                .accessibilityElement()
+                .accessibilityLabel("\(item.name), \(item.amount, format: .currency(code: selectedCurrencyCode))")
+                .accessibilityHint(item.type)
             }
             .onDelete(perform: deleteItems)
         }

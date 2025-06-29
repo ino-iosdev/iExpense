@@ -57,6 +57,7 @@ struct ContentView: View {
                 ExpenseSection(title: "Business", expenses: expenses.businessItems, selectedCurrencyCode: "USD", deleteItems: removeBusinessItems)
                 ExpenseSection(title: "Personal", expenses: expenses.personalItems, selectedCurrencyCode: "USD", deleteItems: removePersonalItems)
             }
+            
             .navigationTitle("iExpense")
             .toolbar {
                 NavigationLink {

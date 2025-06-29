@@ -12,7 +12,7 @@ extension View {
         if item.amount < 10 {
             return self.foregroundStyle(.green)
         } else if item.amount < 100 {
-            return self.foregroundStyle(.black)
+            return self.foregroundStyle(.gray)
         } else {
             return self.foregroundStyle(.red)
         }
